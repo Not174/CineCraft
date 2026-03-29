@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineCraft</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo-area">
+                    <img src="assets/staff.png" alt="Icon" class="logo-img">
+                    <h1 class="logo-text">CineCraft</h1>
+                    <div class="logo-underline"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main App Container -->
+        <main class="dashboard-viewport">
+
+            <!-- Dashboard View (Matches Screenshot) -->
+            <div id="view-dashboard" class="app-view">
+                <div class="app-card dashboard-card">
+                    <div class="main-hero-card">
+                        <div class="wand-icon"><img src="staff.png" alt="CineCraft"></div>
+                        <h1 class="hero-logo">CineCraft</h1>
+                    </div>
+
+                    <div class="menu-grid">
+                        <div class="menu-card card-orange" onclick="navigate('converter')">
+                            <span>Format Converter</span>
+                        </div>
+                        <div class="menu-card card-yellow" onclick="navigate('merge')">
+                            <span>Merge</span>
+                        </div>
+                        <div class="menu-card card-blue" onclick="navigate('extract')">
+                            <span>Extract</span>
+                        </div>
+                        <div class="menu-card card-grey" onclick="navigate('crop')">
+                            <span>Crop Video</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Pages -->
+            <div id="view-converter" class="app-view hidden">
+                <div class="app-card glass-page">
+                    <div class="page-header-row">
+                        <button class="back-btn" onclick="navigate('dashboard')">← Back to Menu</button>
+                        <button class="refresh-btn" onclick="resetTool('conv')" title="Clear all fields">↺ Refresh</button>
+                    </div>
+                    <h2>Format Converter</h2>
+                    <div class="form-group">
+                        <label>Source Video</label>
+                        <div class="input-row">
+                            <input type="text" id="conv-input" readonly placeholder="Select a path...">
+                            <button class="browse-btn" onclick="browseFile('conv-input', 'conv-format')"></button>
+                        </div>
+                    </div>
+                    <div class="form-group row-group">
+                        <div class="field field-small">
+                            <label>Format</label>
+                            <select id="conv-format" onchange="suggestPath('conv-input', 'conv-format')">
+                                <option value=".mp4">MP4</option>
+                                <option value=".mkv">MKV</option>
+                                <option value=".ts">TS</option>
+                            </select>
+                        </div>
+                        <div class="field field-small">
+                            <label>Mode</label>
+                            <select id="conv-mode">
+                                <option value="transcode">Transcode</option>
+                                <option value="remux">Remux</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Output Path</label>
+                            <div class="input-row">
+                                <input type="text" id="conv-output-path" placeholder="Save as...">
+                                <button class="browse-btn" onclick="browseSavePath('conv-output-path', 'conv-format')"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="status-conv" class="status-area">
+                        <div class="status-row">
+                            <span id="label-conv" class="status-label">Ready</span>
+                            <div class="progress-bar-bg">
+                                <div id="bar-conv" class="progress-bar-fill"></div>
+                            </div>
+                            <span id="pct-conv" class="pct-digit">0%</span>
+                            <button class="action-btn btn-orange" onclick="runConverter()">Start Convertion</button>
+                        </div>
+                        <div id="msg-conv" class="result-message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-merge" class="app-view hidden">
+                <div class="app-card glass-page">
+                    <div class="page-header-row">
+                        <button class="back-btn" onclick="navigate('dashboard')">← Back to Menu</button>
+                        <button class="refresh-btn" onclick="resetTool('merge')" title="Clear all fields">↺ Refresh</button>
+                    </div>
+                    <h2>Merge Media</h2>
+                    <div class="form-group">
+                        <label>Videos</label>
+                        <div class="input-row">
+                            <input type="text" id="merge-videos" readonly placeholder="Select videos...">
+                            <button class="browse-btn" onclick="browseMultiple('merge-videos', 'merge-format')"></button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Audio / Sub (Optional)</label>
+                        <div class="input-row">
+                            <input type="text" id="merge-audio" readonly placeholder="Audio">
+                            <button class="browse-btn" onclick="browseFile('merge-audio')"></button>
+                            <input type="text" id="merge-sub" readonly placeholder="Sub">
+                            <button class="browse-btn" onclick="browseFile('merge-sub')"></button>
+                        </div>
+                    </div>
+                    <div class="form-group row-group">
+                        <div class="field field-small">
+                            <label>Format</label>
+                            <select id="merge-format" onchange="suggestPath('merge-videos', 'merge-format')">
+                                <option value=".mkv">MKV</option>
+                                <option value=".mp4">MP4</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Output Path</label>
+                            <div class="input-row">
+                                <input type="text" id="merge-output-path" placeholder="Save as...">
+                                <button class="browse-btn" onclick="browseSavePath('merge-output-path', 'merge-format')"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="status-merge" class="status-area">
+                        <div class="status-row">
+                            <span id="label-merge" class="status-label">Ready</span>
+                            <div class="progress-bar-bg">
+                                <div id="bar-merge" class="progress-bar-fill"></div>
+                            </div>
+                            <span id="pct-merge" class="pct-digit">0%</span>
+                            <button class="action-btn btn-yellow" onclick="runMerge()">Merge & Save</button>
+                        </div>
+                        <div id="msg-merge" class="result-message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-extract" class="app-view hidden">
+                <div class="app-card glass-page">
+                    <div class="page-header-row">
+                        <button class="back-btn" onclick="navigate('dashboard')">← Back to Menu</button>
+                        <button class="refresh-btn" onclick="resetTool('extract')" title="Clear all fields">↺ Refresh</button>
+                    </div>
+                    <h2>Extract Streams</h2>
+                    <div class="form-group">
+                        <label>Source Video</label>
+                        <div class="input-row">
+                            <input type="text" id="extract-input" readonly placeholder="Select a video...">
+                            <button class="browse-btn" onclick="browseFile('extract-input')"></button>
+                        </div>
+                    </div>
+                    <div class="form-group row-group">
+                        <div class="field field-small">
+                            <label>Extract Target</label>
+                            <select id="extract-type">
+                                <option value="audio">Extract All Audio Tracks</option>
+                                <option value="subtitle">Extract All Subtitles</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Destination Folder (Optional)</label>
+                            <div class="input-row">
+                                <input type="text" id="extract-output" readonly placeholder="Same as source...">
+                                <button class="browse-btn" onclick="browseFolder('extract-output')"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="status-extract" class="status-area">
+                        <div class="status-row">
+                            <span id="label-extract" class="status-label">Ready</span>
+                            <div class="progress-bar-bg">
+                                <div id="bar-extract" class="progress-bar-fill"></div>
+                            </div>
+                            <span id="pct-extract" class="pct-digit">0%</span>
+                            <button class="action-btn btn-blue" onclick="runExtract()">Execute Extraction</button>
+                        </div>
+                        <div id="msg-extract" class="result-message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-crop" class="app-view hidden">
+                <div class="app-card glass-page">
+                    <div class="page-header-row">
+                        <button class="back-btn" onclick="navigate('dashboard')">← Back to Menu</button>
+                        <button class="refresh-btn" onclick="resetTool('crop')" title="Clear all fields">↺ Refresh</button>
+                    </div>
+                    <h2>Crop / Delete Portion</h2>
+                    <div class="form-group">
+                        <label>Source Video</label>
+                        <div class="input-row">
+                            <input type="text" id="crop-input" readonly placeholder="Select a video...">
+                            <button class="browse-btn" onclick="browseFile('crop-input')"></button>
+                        </div>
+                    </div>
+                    <div class="form-group row-group">
+                        <div class="field">
+                            <label>Start (s)</label>
+                            <input type="text" id="crop-start" placeholder="0">
+                        </div>
+                        <div class="field">
+                            <label>End (s)</label>
+                            <input type="text" id="crop-end" placeholder="10">
+                        </div>
+                    </div>
+                    <div class="form-group row-group">
+                        <div class="field field-small">
+                            <label>Action</label>
+                            <select id="crop-mode">
+                                <option value="crop">Keep</option>
+                                <option value="delete">Remove</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Output Path</label>
+                            <div class="input-row">
+                                <input type="text" id="crop-output-path" placeholder="Save as...">
+                                <button class="browse-btn" onclick="browseSavePath('crop-output-path', 'crop-input')"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="status-crop" class="status-area">
+                        <div class="status-row">
+                            <span id="label-crop" class="status-label">Ready</span>
+                            <div class="progress-bar-bg">
+                                <div id="bar-crop" class="progress-bar-fill"></div>
+                            </div>
+                            <span id="pct-crop" class="pct-digit">0%</span>
+                            <button class="action-btn btn-grey" onclick="runCrop()">Process Video</button>
+                        </div>
+                        <div id="msg-crop" class="result-message"></div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

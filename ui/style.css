@@ -1,0 +1,369 @@
+:root {
+    --bg-dashboard: #000000;
+    --header-green: #A9D18E;
+    --card-orange: #F4B183;
+    --card-yellow: #FFD966;
+    --card-blue: #BDD7EE;
+    --card-grey: #A6A6A6;
+    
+    --text-white: #ffffff;
+    --border-dark: #333333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dashboard);
+    color: var(--text-white);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* App Header (Small top bar) */
+.main-header {
+    display: none; 
+}
+
+.dashboard-viewport {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.app-view {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Dashboard Style (Matching Screenshot) --- */
+
+.menu-container {
+    width: 100%;
+    max-width: 700px; 
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.main-hero-card {
+    background-color: var(--header-green);
+    border: 3px solid #4472C4;
+    border-radius: 40px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-logo {
+    font-size: 2.8rem;
+    color: #4472C4;
+    font-weight: 700;
+}
+
+.wand-icon {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+}
+
+.wand-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.menu-card {
+    height: 160px;
+    border-radius: 30px;
+    border: 3px solid var(--border-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #333; /* Dark text on colorful cards */
+}
+
+.menu-card:active {
+    transform: scale(0.98);
+}
+
+.card-orange { background-color: var(--card-orange); }
+.card-yellow { background-color: var(--card-yellow); }
+.card-blue { background-color: var(--card-blue); }
+.card-grey { background-color: var(--card-grey); }
+
+/* --- Common Card Style (App Border) --- */
+
+.app-card {
+    width: 95vw;
+    height: 94vh;
+    max-width: 820px;
+    max-height: 680px;
+    padding: 30px;
+    border-radius: 35px;
+    border: 3px solid #4472C4;
+    background: #111111;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dashboard-card {
+    padding: 25px;
+}
+
+.dashboard-card .main-hero-card {
+    padding: 25px;
+    border-radius: 25px;
+    margin-bottom: 20px;
+}
+
+.dashboard-card .hero-logo {
+    font-size: 2.2rem;
+}
+
+.dashboard-card .wand-icon {
+    width: 90px;
+    height: 90px;
+}
+
+.dashboard-card .menu-card {
+    height: 130px;
+    font-size: 1.4rem;
+    border-radius: 25px;
+}
+
+.tool-page h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: var(--header-green);
+}
+
+.back-btn {
+    background: #000;
+    border: 1px solid #4472C4;
+    color: #4472C4;
+    padding: 8px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.page-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.refresh-btn {
+    background: transparent;
+    border: 1px solid #444;
+    color: #888;
+    padding: 8px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+    border-color: #A9D18E;
+    color: #A9D18E;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #888;
+}
+
+.input-row {
+    display: flex;
+    gap: 10px;
+}
+
+input[type="text"], select {
+    flex: 1;
+    padding: 12px 15px;
+    background: #000;
+    border: 2px solid #333;
+    border-radius: 12px;
+    font-size: 1rem;
+    color: #fff;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: #4472C4;
+}
+
+.browse-btn {
+    padding: 0 20px;
+    background: #222;
+    border: 2px solid #333;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.action-btn {
+    width: auto;
+    min-width: 150px;
+    padding: 8px 20px;
+    border: 2px solid var(--border-dark);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+.btn-orange { background-color: var(--card-orange); }
+.btn-yellow { background-color: var(--card-yellow); }
+.btn-blue { background-color: var(--card-blue); }
+.btn-grey { background-color: var(--card-grey); }
+.btn-danger { background-color: #FF453A !important; color: #fff !important; border-color: rgba(255, 69, 58, 0.5) !important; }
+
+/* Row Group */
+.row-group {
+    display: flex;
+    gap: 30px;
+}
+
+.row-group .field {
+    flex: 1;
+}
+
+.row-group .field-small {
+    flex: 0 0 150px;
+}
+
+/* Status Area */
+.status-area {
+    margin-top: 35px;
+    border-top: 1px solid #222;
+    padding-top: 25px;
+}
+
+.status-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.status-label {
+    min-width: 140px;
+    font-weight: 600;
+    color: #888;
+    font-size: 0.95rem;
+}
+
+.progress-bar-bg {
+    flex: 1;
+    height: 10px;
+    background: #222;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.pct-digit {
+    min-width: 45px;
+    text-align: right;
+    color: #4472C4;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: #4472C4;
+    transition: width 0.3s;
+}
+
+.result-message {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    min-height: 1.5em; /* Prevent layout jump */
+}
+
+.result-message.success { color: #2ecc71; }
+.result-message.error { color: #e74c3c; }
+
+/* --- Dashboard Busy State --- */
+.menu-card {
+    position: relative;
+}
+
+.menu-card.busy {
+    border: 2px solid #fff !important;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.menu-card.busy::after {
+    content: "Processing...";
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #333;
+    animation: menuPulse 1.5s infinite;
+}
+
+@keyframes menuPulse {
+    0% { opacity: 0.4; transform: translateX(-50%) scale(0.95); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+    100% { opacity: 0.4; transform: translateX(-50%) scale(0.95); }
+}
