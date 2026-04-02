@@ -1,2 +1,4 @@
-pywebview
-pyinstaller
+fastapi>=0.115,<1.0
+uvicorn>=0.35,<1.0
+pywebview>=5.4,<6.0
+pyinstaller>=6.0,<7.0

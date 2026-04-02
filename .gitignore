@@ -1,12 +1,49 @@
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
 .venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+
+# Build & Distribution
 build/
 dist/
-*.spec
+*.egg-info/
+.eggs/
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+.runtime/
+
+# Temporary Files
 *.temp.*
+*.log
+*.tmp
+
+# Project Specific
 concat_list.txt
 del_concat.txt
 node_modules/
-.DS_Store
+output/
+temp/

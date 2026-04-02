@@ -5,259 +5,405 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineCraft</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/static/assets/staff.ico">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
-    <div class="app-container">
-        <!-- Header Section -->
-        <header class="main-header">
-            <div class="header-content">
-                <div class="logo-area">
-                    <img src="assets/staff.png" alt="Icon" class="logo-img">
-                    <h1 class="logo-text">CineCraft</h1>
-                    <div class="logo-underline"></div>
+    <div class="app-shell">
+        <div class="ambient ambient-left"></div>
+        <div class="ambient ambient-right"></div>
+
+        <header class="topbar">
+            <div class="brand-block">
+                <div class="brand-mark">
+                    <img src="/static/assets/staff.png" alt="CineCraft logo">
                 </div>
+                <div>
+                    <p class="eyebrow">Video operations studio</p>
+                    <h1>CineCraft</h1>
+                </div>
+            </div>
+
+            <div class="status-cluster">
+                <div class="status-pill" id="engine-pill">
+                    <span class="status-dot"></span>
+                    <span id="engine-text">Checking FFmpeg</span>
+                </div>
+                <button class="ghost-button" id="refresh-status" type="button">Refresh Status</button>
             </div>
         </header>
 
-        <!-- Main App Container -->
-        <main class="dashboard-viewport">
-
-            <!-- Dashboard View (Matches Screenshot) -->
-            <div id="view-dashboard" class="app-view">
-                <div class="app-card dashboard-card">
-                    <div class="main-hero-card">
-                        <div class="wand-icon"><img src="staff.png" alt="CineCraft"></div>
-                        <h1 class="hero-logo">CineCraft</h1>
-                    </div>
-
-                    <div class="menu-grid">
-                        <div class="menu-card card-orange" onclick="navigate('converter')">
-                            <span>Format Converter</span>
-                        </div>
-                        <div class="menu-card card-yellow" onclick="navigate('merge')">
-                            <span>Merge</span>
-                        </div>
-                        <div class="menu-card card-blue" onclick="navigate('extract')">
-                            <span>Extract</span>
-                        </div>
-                        <div class="menu-card card-grey" onclick="navigate('crop')">
-                            <span>Crop Video</span>
-                        </div>
-                    </div>
-                </div>
+        <section class="hero-panel" id="hero-panel">
+            <div class="hero-copy">
+                <p class="eyebrow">Built for fast local workflows</p>
+                <h2>Transform rough clips into polished deliverables from one cinematic workspace.</h2>
+                <p class="hero-text">
+                    Convert formats, merge timelines, extract assets, and trim with live progress, native file dialogs,
+                    and a cleaner FFmpeg pipeline behind the scenes.
+                </p>
             </div>
+            <div class="hero-metrics">
+                <article class="metric-card"><span class="metric-value">4</span><span class="metric-label">Production tools</span></article>
+                <article class="metric-card"><span class="metric-value">Local</span><span class="metric-label">Private processing</span></article>
+                <article class="metric-card"><span class="metric-value">Live</span><span class="metric-label">Job tracking</span></article>
+            </div>
+        </section>
 
-            <!-- Tool Pages -->
-            <div id="view-converter" class="app-view hidden">
-                <div class="app-card glass-page">
-                    <div class="page-header-row">
-                        <button class="back-btn" onclick="navigate('dashboard')">← Back to Menu</button>
-                        <button class="refresh-btn" onclick="resetTool('conv')" title="Clear all fields">↺ Refresh</button>
-                    </div>
-                    <h2>Format Converter</h2>
-                    <div class="form-group">
-                        <label>Source Video</label>
-                        <div class="input-row">
-                            <input type="text" id="conv-input" readonly placeholder="Select a path...">
-                            <button class="browse-btn" onclick="browseFile('conv-input', 'conv-format')"></button>
+        <main class="workspace-grid">
+            <section class="tools-column">
+                <nav class="tool-nav" id="tool-nav" aria-label="Tool navigation">
+                    <button class="tool-tab active" data-route="home" type="button">Overview</button>
+                    <button class="tool-tab" data-route="convert" type="button">Convert</button>
+                    <button class="tool-tab" data-route="merge" type="button">Merge</button>
+                    <button class="tool-tab" data-route="extract" type="button">Extract</button>
+                    <button class="tool-tab" data-route="edit" type="button">Edit</button>
+                </nav>
+
+                <section class="tool-home" id="tool-home">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Choose your workspace</p>
                         </div>
                     </div>
-                    <div class="form-group row-group">
-                        <div class="field field-small">
-                            <label>Format</label>
-                            <select id="conv-format" onchange="suggestPath('conv-input', 'conv-format')">
+                    <div class="workspace-overview">
+                        <div class="tool-link-grid">
+                            <button class="tool-link-card" type="button" data-route="convert">
+                                <span class="tool-link-kicker">Format engine</span>
+                                <strong>Convert</strong>
+                                <p>Switch containers fast, or export a compatibility-ready master.</p>
+                            </button>
+                            <button class="tool-link-card" type="button" data-route="merge">
+                                <span class="tool-link-kicker">Timeline assembly</span>
+                                <strong>Merge</strong>
+                                <p>Join clips, layer external audio, and attach subtitles in one pass.</p>
+                            </button>
+                            <button class="tool-link-card" type="button" data-route="extract">
+                                <span class="tool-link-kicker">Asset separation</span>
+                                <strong>Extract</strong>
+                                <p>Pull audio or subtitle tracks into reusable deliverables.</p>
+                            </button>
+                            <button class="tool-link-card" type="button" data-route="edit">
+                                <span class="tool-link-kicker">Precision edit</span>
+                                <strong>Edit</strong>
+                                <p>Trim or remove ranges with a focused preview workflow.</p>
+                            </button>
+                        </div>
+                        <section class="workspace-notes-card" aria-label="Workflow notes">
+                            <div class="panel-heading tight">
+                                <div>
+                                    <p class="info-label">Workflow notes</p>
+                                    <h3>Quick tips</h3>
+                                </div>
+                            </div>
+                            <div class="tips-list" id="tips-list">
+                                <article class="tip is-active" data-tip-index="0"><h4>Use Remux for speed</h4><p>Remux copies streams without re-encoding when the container is the only thing changing.</p></article>
+                                <article class="tip" data-tip-index="1"><h4>Use MP4 for portability</h4><p>MP4 exports are re-encoded where needed so they play more reliably across platforms.</p></article>
+                                <article class="tip" data-tip-index="2"><h4>Editor preview can proxy heavy files</h4><p>MKV, TS, HEVC, and other browser-hostile formats get a fast temporary preview automatically.</p></article>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="tool-panel" data-panel="convert">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Format engine</p>
+                            <h3>Convert media for delivery or archive.</h3>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="ghost-button" type="button" data-route="home">Back to Workspace</button>
+                            <button class="ghost-button" type="button" data-reset="convert">Reset</button>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <label class="field span-2">
+                            <span>Source video</span>
+                            <div class="field-row">
+                                <input id="conv-input" type="text" placeholder="Choose a source clip" readonly>
+                                <button type="button" class="field-button" data-browse="file" data-target="conv-input" data-suggest="conv-output" data-format="conv-format">Browse</button>
+                            </div>
+                        </label>
+                        <label class="field">
+                            <span>Target format</span>
+                            <select id="conv-format" data-suggest-from="conv-input" data-suggest-target="conv-output">
                                 <option value=".mp4">MP4</option>
                                 <option value=".mkv">MKV</option>
                                 <option value=".ts">TS</option>
                             </select>
-                        </div>
-                        <div class="field field-small">
-                            <label>Mode</label>
+                        </label>
+                        <label class="field">
+                            <span>Render mode</span>
                             <select id="conv-mode">
-                                <option value="transcode">Transcode</option>
-                                <option value="remux">Remux</option>
+                                <option value="remux">Remux without re-encoding</option>
+                                <option value="transcode">Transcode for compatibility</option>
                             </select>
-                        </div>
-                        <div class="field">
-                            <label>Output Path</label>
-                            <div class="input-row">
-                                <input type="text" id="conv-output-path" placeholder="Save as...">
-                                <button class="browse-btn" onclick="browseSavePath('conv-output-path', 'conv-format')"></button>
+                        </label>
+                        <label class="field span-2">
+                            <span>Output path</span>
+                            <div class="field-row">
+                                <input id="conv-output" type="text" placeholder="Save destination">
+                                <button type="button" class="field-button" data-browse="save" data-target="conv-output" data-format="conv-format">Save As</button>
                             </div>
-                        </div>
+                        </label>
                     </div>
-                    <div id="status-conv" class="status-area">
-                        <div class="status-row">
-                            <span id="label-conv" class="status-label">Ready</span>
-                            <div class="progress-bar-bg">
-                                <div id="bar-conv" class="progress-bar-fill"></div>
+                    <div class="panel-status" id="status-convert">
+                        <div class="status-head">
+                            <div>
+                                <p class="status-title">Ready for conversion</p>
+                                <p class="status-copy">Choose a source clip and export format to start.</p>
                             </div>
-                            <span id="pct-conv" class="pct-digit">0%</span>
-                            <button class="action-btn btn-orange" onclick="runConverter()">Start Convertion</button>
+                            <button class="action-button amber" id="run-convert" type="button">Start Conversion</button>
                         </div>
-                        <div id="msg-conv" class="result-message"></div>
+                        <div class="progress-track"><div class="progress-fill" id="progress-convert"></div></div>
+                        <div class="status-meta"><span id="progress-label-convert">0%</span><div class="artifact-list" id="artifacts-convert"></div></div>
                     </div>
-                </div>
-            </div>
+                </section>
 
-            <div id="view-merge" class="app-view hidden">
-                <div class="app-card glass-page">
-                    <div class="page-header-row">
-                        <button class="back-btn" onclick="navigate('dashboard')">← Back to Menu</button>
-                        <button class="refresh-btn" onclick="resetTool('merge')" title="Clear all fields">↺ Refresh</button>
-                    </div>
-                    <h2>Merge Media</h2>
-                    <div class="form-group">
-                        <label>Videos</label>
-                        <div class="input-row">
-                            <input type="text" id="merge-videos" readonly placeholder="Select videos...">
-                            <button class="browse-btn" onclick="browseMultiple('merge-videos', 'merge-format')"></button>
+                <section class="tool-panel" data-panel="merge">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Timeline assembly</p>
+                            <h3>Stack clips, audio, and subtitles into one export.</h3>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="ghost-button" type="button" data-route="home">Back to Workspace</button>
+                            <button class="ghost-button" type="button" data-reset="merge">Reset</button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Audio / Sub (Optional)</label>
-                        <div class="input-row">
-                            <input type="text" id="merge-audio" readonly placeholder="Audio">
-                            <button class="browse-btn" onclick="browseFile('merge-audio')"></button>
-                            <input type="text" id="merge-sub" readonly placeholder="Sub">
-                            <button class="browse-btn" onclick="browseFile('merge-sub')"></button>
-                        </div>
-                    </div>
-                    <div class="form-group row-group">
-                        <div class="field field-small">
-                            <label>Format</label>
-                            <select id="merge-format" onchange="suggestPath('merge-videos', 'merge-format')">
+                    <div class="form-grid">
+                        <label class="field span-2">
+                            <span>Video clips</span>
+                            <div class="field-row">
+                                <input id="merge-videos" type="text" placeholder="Choose one or more clips" readonly>
+                                <button type="button" class="field-button" data-browse="multiple" data-target="merge-videos" data-suggest="merge-output" data-format="merge-format">Add Clips</button>
+                            </div>
+                        </label>
+                        <label class="field">
+                            <span>External audio</span>
+                            <div class="field-row compact">
+                                <input id="merge-audio" type="text" placeholder="Optional" readonly>
+                                <button type="button" class="field-button" data-browse="file" data-target="merge-audio">Browse</button>
+                            </div>
+                        </label>
+                        <label class="field">
+                            <span>Subtitle file</span>
+                            <div class="field-row compact">
+                                <input id="merge-subtitle" type="text" placeholder="Optional" readonly>
+                                <button type="button" class="field-button" data-browse="file" data-target="merge-subtitle">Browse</button>
+                            </div>
+                        </label>
+                        <label class="field">
+                            <span>Output format</span>
+                            <select id="merge-format" data-suggest-from="merge-videos" data-suggest-target="merge-output">
                                 <option value=".mkv">MKV</option>
                                 <option value=".mp4">MP4</option>
                             </select>
-                        </div>
-                        <div class="field">
-                            <label>Output Path</label>
-                            <div class="input-row">
-                                <input type="text" id="merge-output-path" placeholder="Save as...">
-                                <button class="browse-btn" onclick="browseSavePath('merge-output-path', 'merge-format')"></button>
+                        </label>
+                        <label class="field">
+                            <span>Output path</span>
+                            <div class="field-row compact">
+                                <input id="merge-output" type="text" placeholder="Save destination">
+                                <button type="button" class="field-button" data-browse="save" data-target="merge-output" data-format="merge-format">Save As</button>
                             </div>
-                        </div>
+                        </label>
                     </div>
-                    <div id="status-merge" class="status-area">
-                        <div class="status-row">
-                            <span id="label-merge" class="status-label">Ready</span>
-                            <div class="progress-bar-bg">
-                                <div id="bar-merge" class="progress-bar-fill"></div>
+                    <div class="panel-status" id="status-merge">
+                        <div class="status-head">
+                            <div>
+                                <p class="status-title">Build a merged master</p>
+                                <p class="status-copy">Combine matching sources quickly, or export MP4 for broad playback support.</p>
                             </div>
-                            <span id="pct-merge" class="pct-digit">0%</span>
-                            <button class="action-btn btn-yellow" onclick="runMerge()">Merge & Save</button>
+                            <button class="action-button gold" id="run-merge" type="button">Merge Files</button>
                         </div>
-                        <div id="msg-merge" class="result-message"></div>
+                        <div class="progress-track"><div class="progress-fill" id="progress-merge"></div></div>
+                        <div class="status-meta"><span id="progress-label-merge">0%</span><div class="artifact-list" id="artifacts-merge"></div></div>
                     </div>
-                </div>
-            </div>
+                </section>
 
-            <div id="view-extract" class="app-view hidden">
-                <div class="app-card glass-page">
-                    <div class="page-header-row">
-                        <button class="back-btn" onclick="navigate('dashboard')">← Back to Menu</button>
-                        <button class="refresh-btn" onclick="resetTool('extract')" title="Clear all fields">↺ Refresh</button>
-                    </div>
-                    <h2>Extract Streams</h2>
-                    <div class="form-group">
-                        <label>Source Video</label>
-                        <div class="input-row">
-                            <input type="text" id="extract-input" readonly placeholder="Select a video...">
-                            <button class="browse-btn" onclick="browseFile('extract-input')"></button>
+                <section class="tool-panel" data-panel="extract">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Asset separation</p>
+                            <h3>Pull audio or subtitle tracks into reusable files.</h3>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="ghost-button" type="button" data-route="home">Back to Workspace</button>
+                            <button class="ghost-button" type="button" data-reset="extract">Reset</button>
                         </div>
                     </div>
-                    <div class="form-group row-group">
-                        <div class="field field-small">
-                            <label>Extract Target</label>
+                    <div class="form-grid extract-form-grid">
+                        <label class="field extract-source-field">
+                            <span>Source media</span>
+                            <div class="field-row">
+                                <input id="extract-input" type="text" placeholder="Choose a source clip" readonly>
+                                <button type="button" class="field-button" data-browse="file" data-target="extract-input">Browse</button>
+                            </div>
+                        </label>
+                        <label class="field">
+                            <span>Target track type</span>
                             <select id="extract-type">
-                                <option value="audio">Extract All Audio Tracks</option>
-                                <option value="subtitle">Extract All Subtitles</option>
+                                <option value="audio">Audio tracks</option>
+                                <option value="subtitle">Subtitle tracks</option>
                             </select>
-                        </div>
-                        <div class="field">
-                            <label>Destination Folder (Optional)</label>
-                            <div class="input-row">
-                                <input type="text" id="extract-output" readonly placeholder="Same as source...">
-                                <button class="browse-btn" onclick="browseFolder('extract-output')"></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="status-extract" class="status-area">
-                        <div class="status-row">
-                            <span id="label-extract" class="status-label">Ready</span>
-                            <div class="progress-bar-bg">
-                                <div id="bar-extract" class="progress-bar-fill"></div>
-                            </div>
-                            <span id="pct-extract" class="pct-digit">0%</span>
-                            <button class="action-btn btn-blue" onclick="runExtract()">Execute Extraction</button>
-                        </div>
-                        <div id="msg-extract" class="result-message"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="view-crop" class="app-view hidden">
-                <div class="app-card glass-page">
-                    <div class="page-header-row">
-                        <button class="back-btn" onclick="navigate('dashboard')">← Back to Menu</button>
-                        <button class="refresh-btn" onclick="resetTool('crop')" title="Clear all fields">↺ Refresh</button>
-                    </div>
-                    <h2>Crop / Delete Portion</h2>
-                    <div class="form-group">
-                        <label>Source Video</label>
-                        <div class="input-row">
-                            <input type="text" id="crop-input" readonly placeholder="Select a video...">
-                            <button class="browse-btn" onclick="browseFile('crop-input')"></button>
-                        </div>
-                    </div>
-                    <div class="form-group row-group">
-                        <div class="field">
-                            <label>Start (s)</label>
-                            <input type="text" id="crop-start" placeholder="0">
-                        </div>
-                        <div class="field">
-                            <label>End (s)</label>
-                            <input type="text" id="crop-end" placeholder="10">
-                        </div>
-                    </div>
-                    <div class="form-group row-group">
-                        <div class="field field-small">
-                            <label>Action</label>
-                            <select id="crop-mode">
-                                <option value="crop">Keep</option>
-                                <option value="delete">Remove</option>
+                        </label>
+                        <label class="field extract-format-field">
+                            <span>Subtitle output format</span>
+                            <select id="extract-subtitle-format">
+                                <option value="srt">SRT</option>
+                                <option value="ass">ASS</option>
                             </select>
-                        </div>
-                        <div class="field">
-                            <label>Output Path</label>
-                            <div class="input-row">
-                                <input type="text" id="crop-output-path" placeholder="Save as...">
-                                <button class="browse-btn" onclick="browseSavePath('crop-output-path', 'crop-input')"></button>
+                        </label>
+                        <label class="field">
+                            <span>Destination folder</span>
+                            <div class="field-row compact">
+                                <input id="extract-output" type="text" placeholder="Defaults to source folder" readonly>
+                                <button type="button" class="field-button" data-browse="folder" data-target="extract-output">Choose</button>
                             </div>
-                        </div>
+                        </label>
                     </div>
-                    <div id="status-crop" class="status-area">
-                        <div class="status-row">
-                            <span id="label-crop" class="status-label">Ready</span>
-                            <div class="progress-bar-bg">
-                                <div id="bar-crop" class="progress-bar-fill"></div>
+                    <div class="panel-status" id="status-extract">
+                        <div class="status-head">
+                            <div>
+                                <p class="status-title">Prepare isolated assets</p>
+                                <p class="status-copy">Text subtitles and multiple audio tracks are exported separately, with a ZIP bundle when useful.</p>
                             </div>
-                            <span id="pct-crop" class="pct-digit">0%</span>
-                            <button class="action-btn btn-grey" onclick="runCrop()">Process Video</button>
+                            <button class="action-button cyan" id="run-extract" type="button">Extract Tracks</button>
                         </div>
-                        <div id="msg-crop" class="result-message"></div>
+                        <div class="progress-track"><div class="progress-fill" id="progress-extract"></div></div>
+                        <div class="status-meta"><span id="progress-label-extract">0%</span><div class="artifact-list" id="artifacts-extract"></div></div>
                     </div>
-                </div>
-            </div>
+                </section>
 
+                <section class="tool-panel" data-panel="edit">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Precision edit</p>
+                            <h3>Trim the selected range or remove it and stitch the clip back together.</h3>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="ghost-button" type="button" data-route="home">Back to Workspace</button>
+                            <button class="ghost-button" type="button" data-reset="edit">Reset</button>
+                        </div>
+                    </div>
+                    <div class="editor-grid">
+                        <div class="preview-card">
+                            <div class="preview-stage">
+                                <video id="edit-preview" controls playsinline preload="metadata"></video>
+                                <div class="preview-empty" id="preview-empty">
+                                    <div>
+                                        <p>Select a clip to load preview controls.</p>
+                                        <span>Compatible files stream directly. Others get an instant proxy preview.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="editor-range">
+                                <div class="range-summary">
+                                    <div><span>Start</span><strong id="edit-start-label">00:00:00</strong></div>
+                                    <div><span>Selection</span><strong id="edit-length-label">00:00:00</strong></div>
+                                    <div><span>End</span><strong id="edit-end-label">00:00:00</strong></div>
+                                </div>
+                                <div class="range-jump-controls" aria-label="Preview seek controls">
+                                    <div class="range-jump-group range-jump-group-left">
+                                        <button class="range-jump-button" id="seek-back-1s" type="button" data-seek-ms="-1000" aria-label="Seek backward 1 second" title="Back 1 second">
+                                            <span class="range-jump-icon" aria-hidden="true">◀◀</span>
+                                        </button>
+                                        <button class="range-jump-button" id="seek-back-10ms" type="button" data-seek-ms="-100" aria-label="Seek backward 10 hundredths of a second" title="Back 00:00:10">
+                                            <span class="range-jump-icon" aria-hidden="true">◀</span>
+                                        </button>
+                                    </div>
+                                    <div class="range-jump-group range-jump-group-right">
+                                        <button class="range-jump-button" id="seek-forward-10ms" type="button" data-seek-ms="100" aria-label="Seek forward 10 hundredths of a second" title="Forward 00:00:10">
+                                            <span class="range-jump-icon" aria-hidden="true">▶</span>
+                                        </button>
+                                        <button class="range-jump-button" id="seek-forward-1s" type="button" data-seek-ms="1000" aria-label="Seek forward 1 second" title="Forward 1 second">
+                                            <span class="range-jump-icon" aria-hidden="true">▶▶</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="range-control">
+                                    <div class="range-visual">
+                                        <span class="range-selection" id="range-selection"></span>
+                                        <span class="range-playhead" id="range-playhead"></span>
+                                    </div>
+                                    <div class="range-slider-stack">
+                                        <input id="edit-start-range" class="range-handle range-handle-start" type="range" min="0" max="100" value="0" step="0.1">
+                                        <input id="edit-end-range" class="range-handle range-handle-end" type="range" min="0" max="100" value="100" step="0.1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="editor-sidebar">
+                            <div class="insight-card" id="editor-insight">
+                                <p class="info-label">Clip insight</p>
+                                <p class="info-value">No media selected yet.</p>
+                            </div>
+                            <div class="form-grid single-column">
+                                <label class="field">
+                                    <span>Source clip</span>
+                                    <div class="field-row">
+                                        <input id="edit-input" type="text" placeholder="Choose a source clip" readonly>
+                                        <button type="button" class="field-button" data-browse="file" data-target="edit-input">Browse</button>
+                                    </div>
+                                </label>
+                                <label class="field">
+                                    <span>Export mode</span>
+                                    <select id="edit-mode">
+                                        <option value="trim">Keep selected range</option>
+                                        <option value="cut">Delete selected range</option>
+                                    </select>
+                                </label>
+                                <label class="field">
+                                    <span>Output path</span>
+                                    <div class="field-row">
+                                        <input id="edit-output" type="text" placeholder="Save destination">
+                                        <button type="button" class="field-button" data-browse="save" data-target="edit-output" data-fixed-extension=".mp4">Save As</button>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-status" id="status-edit">
+                        <div class="status-head">
+                            <div>
+                                <p class="status-title">Shape the final cut</p>
+                                <p class="status-copy">Use the range controls, then export a clean MP4.</p>
+                            </div>
+                            <div class="edit-status-actions">
+                                <span id="progress-label-edit">0%</span>
+                                <button class="action-button slate" id="run-edit" type="button">Export Edit</button>
+                            </div>
+                        </div>
+                        <div class="progress-track"><div class="progress-fill" id="progress-edit"></div></div>
+                        <div class="status-meta"><div class="artifact-list" id="artifacts-edit"></div></div>
+                    </div>
+                </section>
+            </section>
+
+            <aside class="activity-column">
+                <section class="activity-card">
+                    <div class="panel-heading tight"><div><p class="eyebrow">Current render state</p><h3>Status bar</h3></div></div>
+                    <div class="current-status-shell">
+                        <div class="current-status-copy">
+                            <p class="feed-title" id="current-status-title">Idle</p>
+                            <p class="feed-copy" id="current-status-message">No active processing right now. Launch a tool to begin.</p>
+                        </div>
+                        <div class="progress-track current-status-track">
+                            <div class="progress-fill" id="current-status-progress"></div>
+                        </div>
+                        <div class="status-meta">
+                            <span id="current-status-percent">0%</span>
+                            <span id="current-status-kind">Standby</span>
+                        </div>
+                        <div class="current-status-log" id="current-status-log">Ready for your next render.</div>
+                    </div>
+                </section>
+            </aside>
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 
 </html>
